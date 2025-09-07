@@ -6,6 +6,19 @@ AssetForge AI is an intelligent, AI-powered platform designed to automate the re
 
 This project is a submission for the **Nano Banana Hackathon**, a 48-hour challenge to build innovative applications using the Gemini 2.5 Flash Image Preview model. The goal of this project is to showcase how advanced AI features can create a magical user experience and automate creative workflows at scale.
 
+## Gemini 2.5 Flash Image Integration
+
+AssetForge AI leverages the cutting-edge capabilities of Gemini 2.5 Flash Image as its core AI engine for intelligent asset analysis and generation. The application utilizes several key features of this state-of-the-art model:
+
+-   **Multi-Image Understanding & Composition:** Gemini 2.5 Flash Image can understand and merge multiple input images, enabling users to put objects into scenes, restyle rooms with color schemes or textures, and fuse up to three different images with a single prompt. This powers AssetForge's automated repurposing capabilities, allowing the AI to intelligently adapt assets across different platform formats while maintaining visual coherence.
+
+- **Advanced Object & Face Detection:** The model's sophisticated visual understanding enables automatic detection of faces, objects, and content elements within uploaded assets. This analysis drives smart cropping and focal point preservation during format adaptation, ensuring key visual elements remain prominent across different aspect ratios.
+
+- **Intelligent Image Editing & Transformation:** The model's multimodal capabilities allow for editing, composition, and style transfer by providing images alongside text prompts and describing desired changes. AssetForge leverages this for dynamic prompt suggestions and intelligent resizing strategies (crop vs. extend) based on content analysis.
+
+- **Real-World Visual Reasoning:** The model demonstrates real-world reasoning capabilities that enable smart edits understanding context, which AssetForge utilizes for NSFW content detection and contextually-appropriate adaptations across social media platforms.
+These Gemini 2.5 Flash Image features form the foundation of AssetForge's "magical" user experience, enabling automated, intelligent asset repurposing that would traditionally require manual design work.
+
 ## Features
 
 -   **AI-Powered Asset Analysis:** Automatically analyzes uploaded assets to detect faces, objects, and NSFW content.
@@ -110,8 +123,8 @@ The system health section provides a real-time overview of the status of the app
     -   **Language:** TypeScript
     -   **UI:** React, Tailwind CSS, shadcn/ui
 -   **AI Provider:**
-    -   Google Gemini
-    -   OpenAI
+    -   Google Gemini Family Models along with (Google Gemini 2.5 Flash Image Preview)
+
 -   **DevOps:**
     -   Docker, Docker Compose
 
