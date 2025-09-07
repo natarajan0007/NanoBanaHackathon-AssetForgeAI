@@ -1,0 +1,131 @@
+version: '3.8'
+
+services:
+  frontend:
+    build:
+      context: ./frontend-nextjs
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - NEXT_PUBLIC_API_BASE_URL=http://localhost:8000/api/v1
+    depends_on:
+      - api
+    volumes:
+      - ./frontend-nextjs:/app
+      - /app/node_modules
+      - /app/.next
+  api:
+    build:
+      context: ./backend-fast
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=postgresql://postgres:password@db:5432/ai_creat
+      - REDIS_URL=redis://redis:6379/0
+      - CELERY_BROKER_URL=redis://redis:6379/0
+      - CELERY_RESULT_BACKEND=redis://redis:6379/0
+    depends_on:
+      - db
+      - redis
+    volumes:
+      - ./backend-fast/uploads:/app/uploads
+    command: sh -c "python scripts/init_db.py && uvicorn main:app --host 0.0.0.0 --port 8000"
+
+  worker-asset:
+    build:
+      context: ./backend-fast
+    command: python scripts/start_worker.py --queue asset_processing --concurrency 2
+    environment:
+      - DATABASE_URL=postgresql://postgres:password@db:5432/ai_creat
+      - REDIS_URL=redis://redis:6379/0
+      - CELERY_BROKER_URL=redis://redis:6379/0
+      - CELERY_RESULT_BACKEND=redis://redis:6379/0
+      - SSL_CERT_FILE=/app/certs/gcloud.pem
+    depends_on:
+      - db
+      - redis
+    volumes:
+      - ./backend-fast/uploads:/app/uploads
+      - /Users/m1385710/Documents/Natarajan/GCP/certificate/gcloud.pem:/app/certs/gcloud.pem
+
+  worker-generation:
+    build:
+      context: ./backend-fast
+    command: python scripts/start_worker.py --queue generation --concurrency 1
+    environment:
+      - DATABASE_URL=postgresql://postgres:password@db:5432/ai_creat
+      - REDIS_URL=redis://redis:6379/0
+      - CELERY_BROKER_URL=redis://redis:6379/0
+      - CELERY_RESULT_BACKEND=redis://redis:6379/0
+      - SSL_CERT_FILE=/app/certs/gcloud.pem
+    depends_on:
+      - db
+      - redis
+    volumes:
+      - ./backend-fast/uploads:/app/uploads
+      - /Users/m1385710/Documents/Natarajan/GCP/certificate/gcloud.pem:/app/certs/gcloud.pem
+
+  worker-maintenance:
+    build:
+      context: ./backend-fast
+    command: python scripts/start_worker.py --queue maintenance --concurrency 1
+    environment:
+      - DATABASE_URL=postgresql://postgres:password@db:5432/ai_creat
+      - REDIS_URL=redis://redis:6379/0
+      - CELERY_BROKER_URL=redis://redis:6379/0
+      - CELERY_RESULT_BACKEND=redis://redis:6379/0
+      - SSL_CERT_FILE=/app/certs/gcloud.pem
+    depends_on:
+      - db
+      - redis
+    volumes:
+      - ./backend-fast/uploads:/app/uploads
+      - /Users/m1385710/Documents/Natarajan/GCP/certificate/gcloud.pem:/app/certs/gcloud.pem
+
+  beat:
+    build:
+      context: ./backend-fast
+    command: python scripts/start_beat.py
+    environment:
+      - DATABASE_URL=postgresql://postgres:password@db:5432/ai_creat
+      - REDIS_URL=redis://redis:6379/0
+      - CELERY_BROKER_URL=redis://redis:6379/0
+      - CELERY_RESULT_BACKEND=redis://redis:6379/0
+    depends_on:
+      - db
+      - redis
+    volumes:
+      - ./backend-fast/uploads:/app/uploads
+
+  db:
+    image: postgres:15
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=ai_creat
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+
+  flower:
+    build:
+      context: ./backend-fast
+    # Install flower at runtime if not in requirements.txt
+    command: sh -c "pip install flower>=2.0.0 && celery -A app.celery_app flower --port=5555"
+    ports:
+      - "5555:5555"
+    environment:
+      - CELERY_BROKER_URL=redis://redis:6379/0
+      - CELERY_RESULT_BACKEND=redis://redis:6379/0
+    depends_on:
+      - redis
+
+volumes:
+  postgres_data:

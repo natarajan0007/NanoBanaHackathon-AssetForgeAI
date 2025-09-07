@@ -1,0 +1,93 @@
+# =================================
+# Python / Backend (FastAPI)
+# =================================
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg-info/
+.installed.cfg
+*.egg
+celerybeat-schedule
+celerybeat.pid
+
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+
+# Database
+test.db
+
+# Project Specific (Backend)
+/backend-fast/uploads/
+/backend-fast/.env
+/backend-fast/test.db
+/backend-fast/celerybeat-schedule
+/backend-fast/celerybeat.pid
+
+# =================================
+# Node.js / Frontend (Next.js)
+# =================================
+
+# Dependencies
+/frontend-nextjs/node_modules
+/frontend-nextjs/.pnp
+/frontend-nextjs/.pnp.js
+/frontend-nextjs/.yarn/
+
+# Next.js
+/frontend-nextjs/.next/
+/frontend-nextjs/out/
+/frontend-nextjs/build/
+
+# Vercel
+/frontend-nextjs/.vercel
+
+# TypeScript
+/frontend-nextjs/*.tsbuildinfo
+/frontend-nextjs/next-env.d.ts
+
+# Local Env Files (Frontend)
+/frontend-nextjs/.env*.local
+/frontend-nextjs/.env
+!/frontend-nextjs/.env.example
+
+# Frontend Logs
+/frontend-nextjs/npm-debug.log*
+/frontend-nextjs/yarn-debug.log*
+/frontend-nextjs/yarn-error.log*
+/frontend-nextjs/logs/
+/frontend-nextjs/*.log
+
+# =================================
+# General / Shared
+# =================================
+
+# IDEs
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Testing / Coverage
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+nosetests.xml
+coverage.xml
+/frontend-nextjs/coverage/
+
+# Misc
+*.pem
+/temp/
+
