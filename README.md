@@ -443,12 +443,12 @@ flowchart TD
 
 1.  **Unzip the project:**
 
-    Unzip the `NanoBanaHackathon-AssetForgeAI.zip` file to a location of your choice.
+    Unzip the `NanoBananaHackathon-AssetForgeAI.zip` file to a location of your choice.
 
 2.  **Navigate to the project directory:**
 
     ```bash
-    cd NanoBanaHackathon-AssetForgeAI
+    cd NanoBananaHackathon-AssetForgeAI
     ```
 
 3.  **Set up environment variables:**
@@ -480,7 +480,7 @@ flowchart TD
 
 ### Usage
 
--   **Frontend:** The frontend is accessible at `http://localhost:3000`.
+-   **Frontend:** The frontend is accessible at `http://localhost:3000`. Default Login Credentials for admin :- username:-admin password: admin123. You have to onboard new end user inorder to upload and generate assets.
 -   **Backend API:** The backend API is accessible at `http://localhost:8000`.
 -   **Flower (Celery Monitoring):** The Flower dashboard for monitoring Celery tasks is accessible at `http://localhost:5555`.
 
